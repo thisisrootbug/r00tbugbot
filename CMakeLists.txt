@@ -1,0 +1,30 @@
+cmake_minimum_required(VERSION 3.10)
+project(r00tbugbot)
+
+execute_process (
+    COMMAND bash -c "wx-config --cxxflags --libs"
+    OUTPUT_VARIABLE WX_CXXFLAGS 
+)
+string(STRIP ${WX_CXXFLAGS} WX_CXXFLAGS)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -lpqxx -lpq")
+set(Boost_USE_MULTITHREADED ON)
+set(PQXX /usr/include/pqxx)
+set(wxWidgets_CONFIGURATION mswu)
+find_library(PQXX_LIB pqxx)
+find_library(PQ_LIB pq)
+find_package(Threads REQUIRED)
+find_package(OpenSSL REQUIRED)
+find_package(Boost COMPONENTS system REQUIRED)
+find_package(CURL)
+find_package(wxWidgets COMPONENTS core base webview REQUIRED)
+include(${wxWidgets_USE_FILE})
+include_directories(/usr/local/include ${OPENSSL_INCLUDE_DIR} ${Boost_INCLUDE_DIR})
+if (CURL_FOUND)
+    include_directories(${CURL_INCLUDE_DIRS})
+    add_definitions(-DHAVE_CURL)
+endif()
+
+add_executable(r00tbugbot src/main.cpp)
+target_link_libraries(r00tbugbot /usr/local/lib/libTgBot.a ${PQXX_LIB} ${PQ_LIB} ${CMAKE_THREAD_LIBS_INIT} ${OPENSSL_LIBRARIES} ${Boost_LIBRARIES} ${CURL_LIBRARIES} ${LDFLAGS} ${LIBS} ${wxWidgets_LIBRARIES})
