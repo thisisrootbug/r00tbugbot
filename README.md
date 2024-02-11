@@ -16,12 +16,12 @@ main frame layout is RTL with arabic
 
 
 # build
-    `
+    
     git clone https://github.com/thisisrootbug/r00tbugbot.git
     cd r00tbugbot
     cmake .
     make
-    `
+    
 
 # run
 
