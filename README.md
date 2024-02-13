@@ -5,15 +5,8 @@ main frame layout is RTL with arabic
 
 # requirements
 
-1. Postgresql database connection info
-  host
-  port
-  database name (must be created)
-  username
-  password
-
-2. a telegram bot token 
-
+1. Postgresql database connection info (a database must be created)
+6. a telegram bot token 
 
 # build
     
